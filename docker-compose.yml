@@ -1,0 +1,8 @@
+version: '3'
+services:
+  vibot-video:
+    container_name: vibot-video
+    build: .
+    ports:
+      - "10001:8080"
+    restart: always
