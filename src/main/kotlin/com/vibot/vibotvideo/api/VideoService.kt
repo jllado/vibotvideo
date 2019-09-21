@@ -19,14 +19,12 @@ class VideoService @Autowired constructor(
         val videoId = idBuilder.build()
         val directory = "videos/$videoId"
         downloadAudio(request.audio, directory)
-        downloadImages(request, directory)
-        videoBuilder.build(videoId, request.images.size)
+        val imagesDownloaded = downloadImages(request, directory)
+        videoBuilder.build(videoId, imagesDownloaded)
         return UrlResponse("/video/$videoId")
     }
 
-    private fun downloadImages(request: VideoRequest, directory: String) {
-        imageDownloader.download(request.images, directory)
-    }
+    private fun downloadImages(request: VideoRequest, directory: String): Int = imageDownloader.download(request.images, directory)
 
     private fun downloadAudio(url: String, directory: String) {
         fileDownloader.download(url, directory, AUDIO_FILE)

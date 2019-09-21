@@ -29,7 +29,7 @@ class VideoServiceTest {
     private lateinit var service: VideoService
 
     @Test
-    fun `given video request should download audio`() {
+    fun `should download audio`() {
         val audioUrl = "audio_url"
         val videoId = "video_id"
         doReturn(videoId).`when`(idBuilder).build()
@@ -40,7 +40,7 @@ class VideoServiceTest {
     }
 
     @Test
-    fun `given video request should download images`() {
+    fun `should download images`() {
         val videoId = "video_id"
         val directory = "videos/$videoId"
         val image1 = "image1"
@@ -53,7 +53,7 @@ class VideoServiceTest {
     }
 
     @Test
-    fun `given video request should build video`() {
+    fun `should build video`() {
         val videoId = "video_id"
         doReturn(videoId).`when`(idBuilder).build()
         val request = VideoRequest("audio_url", listOf("image1", "image2"))
@@ -64,7 +64,7 @@ class VideoServiceTest {
     }
 
     @Test
-    fun `given video request should return video url`() {
+    fun `should return video url`() {
         val videoId = "video_id"
         doReturn(videoId).`when`(idBuilder).build()
         val request = VideoRequest("audio_url", listOf("image1", "image2"))
