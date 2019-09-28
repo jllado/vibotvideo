@@ -12,7 +12,7 @@ const val MUSIC_FILE = "music.mp3"
 const val MUSIC_LOOP_FILE = "loop.mp3"
 const val VIDEO_TMP = "tmp.mp4"
 
-private  val ffmpegErrors = listOf("conversion failed", "invalid argument")
+private  val ffmpegErrors = listOf("conversion failed", "invalid argument", "no such file")
 
 @Service
 class VideoBuilder @Autowired constructor(
@@ -34,7 +34,7 @@ class VideoBuilder @Autowired constructor(
     }
 
     private fun addMusic(directory: File, videoDuration: Float) {
-        val music = File(VideoBuilder::class.java.getResource("/music/Cosmic_Love.mp3").file)
+        val music = File("./music/Cosmic_Love.mp3")
         fileManager.copy(music, File("${directory.path}/$MUSIC_FILE"))
         val musicDuration = getAudioDuration(directory, MUSIC_FILE)
         val loopTimes = musicLoopTimes(videoDuration, musicDuration)
