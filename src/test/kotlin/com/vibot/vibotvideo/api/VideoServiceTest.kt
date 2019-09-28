@@ -55,12 +55,14 @@ class VideoServiceTest {
     @Test
     fun `should build video`() {
         val videoId = "video_id"
+        val images = listOf("image1", "image2")
         doReturn(videoId).`when`(idBuilder).build()
-        val request = VideoRequest("audio_url", listOf("image1", "image2"))
+        doReturn(images.size).`when`(imageDownloader).download(images, "videos/$videoId")
+        val request = VideoRequest("audio_url", images)
 
         service.buildVideo(request)
 
-        verify(videoBuilder).build(videoId, 2)
+        verify(videoBuilder).build(videoId, images.size)
     }
 
     @Test
