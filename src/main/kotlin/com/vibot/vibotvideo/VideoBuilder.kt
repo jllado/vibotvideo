@@ -9,6 +9,8 @@ import java.lang.IllegalStateException
 
 const val AUDIO_FILE = "audio.wav"
 
+private  val ffmpegErrors = listOf("conversion failed", "invalid argument")
+
 @Service
 class VideoBuilder @Autowired constructor(
         private val commandRunner: CommandRunner,
@@ -30,7 +32,7 @@ class VideoBuilder @Autowired constructor(
     //ffmpeg -y -thread_queue_size 128 -framerate 3/314 -start_number 1 -i %d-image.jpg -i audio.wav -c:v libx264 -r 1 -pix_fmt yuv420p -c:a aac -strict experimental -shortest out.mp4
     private fun buildVideo(directory: File, frameRate: String) {
         val result = commandRunner.run(directory, "ffmpeg", "-y", "-framerate", frameRate, "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", "-shortest", "out.mp4")
-        if (result.contains("conversion failed", ignoreCase = true)) {
+        if (ffmpegErrors.any { result.contains(it, true) }) {
             throw IllegalArgumentException("Build video failure")
         }
     }
