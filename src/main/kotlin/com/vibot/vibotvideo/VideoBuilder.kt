@@ -34,7 +34,7 @@ class VideoBuilder @Autowired constructor(
     }
 
     private fun addMusic(directory: File, videoDuration: Float) {
-        val music = File("./music/Cosmic_Love.mp3")
+        val music = File("./music/news.mp3")
         fileManager.copy(music, File("${directory.path}/$MUSIC_FILE"))
         val musicDuration = getAudioDuration(directory, MUSIC_FILE)
         val loopTimes = musicLoopTimes(videoDuration, musicDuration)
@@ -53,7 +53,7 @@ class VideoBuilder @Autowired constructor(
     //sox -v 0.3 Arpy.mp3 new_audio.mp3 repeat 10
     private fun buildMusicLoop(directory: File, times: Int) {
         LOGGER.info("Building music loop")
-        commandRunner.run(directory, "sox", "-v", " 0.2", "music.mp3", MUSIC_LOOP_FILE, "repeat", (times - 1).toString())
+        commandRunner.run(directory, "sox", "-v", " 0.1", "music.mp3", MUSIC_LOOP_FILE, "repeat", (times - 1).toString())
         LOGGER.info("Music loop builded")
     }
 

@@ -35,7 +35,7 @@ class VideoBuilderIT {
         builder.build(VIDEO_ID, images)
 
         assertThat(video.exists(), `is`(true))
-        assertThat(video.length(), `is`(2238558L))
+        assertThat(video.length(), `is`(2091898L))
     }
 
     private fun createMediaFiles() {
