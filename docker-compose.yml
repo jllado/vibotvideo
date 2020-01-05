@@ -1,6 +1,7 @@
 version: '3'
 services:
   vibot-video:
+    image: jllado-server:5000/vibot/vibot-video:latest
     container_name: vibot-video
     build: .
     ports:
