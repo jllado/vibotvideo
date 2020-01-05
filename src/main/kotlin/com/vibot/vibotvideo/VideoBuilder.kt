@@ -57,7 +57,6 @@ class VideoBuilder @Autowired constructor(
         LOGGER.info("Music loop builded")
     }
 
-
     //ffmpeg -y -thread_queue_size 128 -framerate 3/314 -start_number 1 -i %d-image.jpg -i audio.wav -c:v libx264 -r 1 -pix_fmt yuv420p -c:a aac -strict experimental -shortest out.mp4
     private fun buildVideo(directory: File, frameRate: String) {
         LOGGER.info("Building video")
