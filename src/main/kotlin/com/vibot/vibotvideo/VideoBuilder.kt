@@ -12,7 +12,7 @@ const val MUSIC_FILE = "music.mp3"
 const val MUSIC_LOOP_FILE = "loop.mp3"
 const val VIDEO_TMP = "tmp.mp4"
 
-private  val ffmpegErrors = listOf("conversion failed", "invalid argument", "no such file")
+private  val ffmpegErrors = listOf("conversion failed", "invalid argument", "no such file", "Stream map '0:v' matches no streams")
 
 @Service
 class VideoBuilder @Autowired constructor(
