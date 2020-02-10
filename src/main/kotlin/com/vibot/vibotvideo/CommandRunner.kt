@@ -21,8 +21,9 @@ class CommandRunner {
         val process = processBuilder.start()
         val output = process.printLog()
         process.waitFor()
+        LOGGER.info(output)
         return output
     }
 
-    private fun Process.printLog() = BufferedReader(InputStreamReader(inputStream)).readLines().joinToString("") { LOGGER.info(it); it }
+    private fun Process.printLog() = BufferedReader(InputStreamReader(inputStream)).readLines().joinToString("\n")
 }
