@@ -32,6 +32,15 @@ class FileDownloaderIT {
         assertThat(downloadedFile.exists(), `is`(true))
     }
 
+    @Test
+    fun `should download image with insecure https image`() {
+        val fileUrl = "https://www.rumbonuevo.com.mx/wp-content/uploads/2019/05/LOZOYA-1.jpg"
+
+        downloadedFile = fileDownloader.download(fileUrl, downloadDirectory, downloadTarget)
+
+        assertThat(downloadedFile.exists(), `is`(true))
+    }
+
     private fun deleteAllFiles() {
         FileSystemUtils.deleteRecursively(Paths.get("$downloadRootDirectory"))
     }
