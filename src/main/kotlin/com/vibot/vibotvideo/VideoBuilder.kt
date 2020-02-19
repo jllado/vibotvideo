@@ -28,7 +28,7 @@ class VideoBuilder @Autowired constructor(
         val directory = fileManager.mdkir("videos/$videoId")
         val duration = getAudioDuration(directory, AUDIO_FILE)
         val frameRate = "$images/$duration"
-        LOGGER.info("framerate: {}", frameRate)
+        LOGGER.info("Building video. Framerate: {}, Audio duration: {} secs, Images: {}", frameRate, duration, images)
         buildVideo(directory, frameRate)
         addMusic(directory, duration)
     }
@@ -42,10 +42,10 @@ class VideoBuilder @Autowired constructor(
         mergeMusicWithVideo(directory)
     }
 
-    //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libvorbis -ac 2 -shortest out.mp4
+    //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libmp3lame -ac 2 -shortest out.mp4
     private fun mergeMusicWithVideo(directory: File) {
         LOGGER.info("Merging video and music")
-        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "ac3_fixed", "-ac", "2", "-shortest", "out.mp4")
+        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-shortest", "out.mp4")
         checkErros(result)
         LOGGER.info("Video and music merged")
     }
