@@ -14,6 +14,7 @@ class CommandRunner {
     }
 
     fun run(directory: File, vararg command: String): String {
+        LOGGER.info("command executed: \n{}", command.joinToString(" "))
         val processBuilder = ProcessBuilder()
         processBuilder.redirectErrorStream(true)
         processBuilder.command(*command)
@@ -21,7 +22,7 @@ class CommandRunner {
         val process = processBuilder.start()
         val output = process.printLog()
         process.waitFor()
-        LOGGER.info(output)
+        LOGGER.info("command output: \n{}", output)
         return output
     }
 

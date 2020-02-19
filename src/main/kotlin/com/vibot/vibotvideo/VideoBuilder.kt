@@ -45,7 +45,7 @@ class VideoBuilder @Autowired constructor(
     //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libvorbis -ac 2 -shortest out.mp4
     private fun mergeMusicWithVideo(directory: File) {
         LOGGER.info("Merging video and music")
-        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libvorbis", "-ac", "2", "-shortest", "out.mp4")
+        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "ac3_fixed", "-ac", "2", "-shortest", "out.mp4")
         checkErros(result)
         LOGGER.info("Video and music merged")
     }
