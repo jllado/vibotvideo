@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import java.io.File
 import java.lang.IllegalArgumentException
 import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 const val AUDIO_FILE = "audio.wav"
 const val MUSIC_FILE = "music.mp3"
@@ -38,23 +39,23 @@ class VideoBuilder @Autowired constructor(
         fileManager.copy(music, File("${directory.path}/$MUSIC_FILE"))
         val musicDuration = getAudioDuration(directory, MUSIC_FILE)
         val loopTimes = musicLoopTimes(videoDuration, musicDuration)
-        buildMusicLoop(directory, loopTimes)
+        buildMusicLoop(directory, loopTimes, videoDuration)
         val musicLoopDuration = getAudioDuration(directory, MUSIC_LOOP_FILE)
         mergeMusicWithVideo(directory, videoDuration, musicLoopDuration)
     }
 
-    //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libmp3lame -ac 2 -shortest out.mp4
+    //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libmp3lame -ac 2 -shortest -strict -1 out.mp4
     private fun mergeMusicWithVideo(directory: File, videoDuration: Float, musicLoopDuration: Float) {
         LOGGER.info("Merging video {} sesc and music {} secs", videoDuration, musicLoopDuration)
-        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-shortest", "out.mp4")
+        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-shortest", "-strict", "-1", "out.mp4")
         checkErros(result)
         LOGGER.info("Video and music merged")
     }
 
     //sox -v 0.3 Arpy.mp3 new_audio.mp3 repeat 10
-    private fun buildMusicLoop(directory: File, times: Int) {
+    private fun buildMusicLoop(directory: File, times: Int, duration: Float) {
         LOGGER.info("Building music loop")
-        commandRunner.run(directory, "sox", "-v", " 0.05", "music.mp3", MUSIC_LOOP_FILE, "repeat", (times - 1).toString())
+        commandRunner.run(directory, "sox", "-v", " 0.05", "music.mp3", MUSIC_LOOP_FILE, "repeat", (times - 1).toString(), "trim", "0", "${duration.roundToInt()}")
         LOGGER.info("Music loop builded")
     }
 
