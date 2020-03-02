@@ -44,10 +44,10 @@ class VideoBuilder @Autowired constructor(
         mergeMusicWithVideo(directory, videoDuration, musicLoopDuration)
     }
 
-    //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libmp3lame -ac 2 -shortest -strict -1 out.mp4
+    //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libmp3lame -ac 2 -strict -1 out.mp4
     private fun mergeMusicWithVideo(directory: File, videoDuration: Float, musicLoopDuration: Float) {
         LOGGER.info("Merging video {} sesc and music {} secs", videoDuration, musicLoopDuration)
-        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-shortest", "-strict", "-1", "out.mp4")
+        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-strict", "-1", "out.mp4")
         checkErros(result)
         LOGGER.info("Video and music merged")
     }
