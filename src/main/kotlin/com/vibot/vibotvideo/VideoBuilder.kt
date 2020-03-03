@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.File
 import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -12,6 +13,7 @@ const val AUDIO_FILE = "audio.wav"
 const val MUSIC_FILE = "music.mp3"
 const val MUSIC_LOOP_FILE = "loop.mp3"
 const val VIDEO_TMP = "tmp.mp4"
+const val VIDEO_FILE = "out.mp4"
 
 private  val ffmpegErrors = listOf("conversion failed", "invalid argument", "no such file", "Stream map '0:v' matches no streams")
 
@@ -46,10 +48,16 @@ class VideoBuilder @Autowired constructor(
 
     //ffmpeg -y -i tmp.mp4 -i loop.mp3 -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map 0:v -map "[a]" -c:v copy -c:a libmp3lame -ac 2 -strict -1 out.mp4
     private fun mergeMusicWithVideo(directory: File, videoDuration: Float, musicLoopDuration: Float) {
-        LOGGER.info("Merging video {} sesc and music {} secs", videoDuration, musicLoopDuration)
-        val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-strict", "-1", "out.mp4")
-        checkErros(result)
-        LOGGER.info("Video and music merged")
+        try {
+            LOGGER.info("Merging video {} sesc and music {} secs", videoDuration, musicLoopDuration)
+            val result = commandRunner.run(directory, "ffmpeg", "-y", "-i", VIDEO_TMP, "-i", MUSIC_LOOP_FILE, "-filter_complex", "[0:a][1:a]amerge=inputs=2[a]", "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "libmp3lame", "-ac", "2", "-strict", "-1", VIDEO_FILE)
+            checkErros(result)
+            LOGGER.info("Video and music merged")
+        } catch (e: Exception) {
+            LOGGER.error("Video and music merge failed", e)
+            commandRunner.run(directory, "cp", VIDEO_TMP, VIDEO_FILE)
+            LOGGER.error("Video builded without music", e)
+        }
     }
 
     //sox -v 0.3 Arpy.mp3 new_audio.mp3 repeat 10
