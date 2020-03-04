@@ -30,7 +30,7 @@ class VideoBuilderTest {
     fun `given conversion ffmpeg failure should throw exception`() {
         doReturn(directory).`when`(fileManager).mdkir("videos/$videoId")
         doReturn("100").`when`(commandRunner).run(directory, "ffprobe",  "-v",  "error",  "-show_entries", "format=duration", "-of" , "default=noprint_wrappers=1:nokey=1",  AUDIO_FILE)
-        doReturn("adsf asdf as Conversion failed! adfasdf adfas").`when`(commandRunner).run(directory, "ffmpeg", "-y", "-framerate", "$images/$audioDuration", "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2","-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", "-shortest", VIDEO_TMP)
+        doReturn("adsf asdf as Conversion failed! adfasdf adfas").`when`(commandRunner).run(directory, "ffmpeg", "-y", "-framerate", "$images/$audioDuration", "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2","-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", VIDEO_TMP)
 
         videoBuilder.build(videoId, images)
     }
@@ -39,7 +39,7 @@ class VideoBuilderTest {
     fun `given invalid argument ffmpeg error should throw exception`() {
         doReturn(directory).`when`(fileManager).mdkir("videos/$videoId")
         doReturn("100").`when`(commandRunner).run(directory, "ffprobe",  "-v",  "error",  "-show_entries", "format=duration", "-of" , "default=noprint_wrappers=1:nokey=1",  AUDIO_FILE)
-        doReturn("adsf asdf as Invalid argument adfasdf adfas").`when`(commandRunner).run(directory, "ffmpeg", "-y", "-framerate", "$images/$audioDuration", "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2","-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", "-shortest", VIDEO_TMP)
+        doReturn("adsf asdf as Invalid argument adfasdf adfas").`when`(commandRunner).run(directory, "ffmpeg", "-y", "-framerate", "$images/$audioDuration", "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2","-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", VIDEO_TMP)
 
         videoBuilder.build(videoId, images)
     }
@@ -48,7 +48,7 @@ class VideoBuilderTest {
     fun `given no such file ffmpeg error should throw exception`() {
         doReturn(directory).`when`(fileManager).mdkir("videos/$videoId")
         doReturn("100").`when`(commandRunner).run(directory, "ffprobe",  "-v",  "error",  "-show_entries", "format=duration", "-of" , "default=noprint_wrappers=1:nokey=1",  AUDIO_FILE)
-        doReturn("adsf asdf as No such file or directory adfasdf adfas").`when`(commandRunner).run(directory, "ffmpeg", "-y", "-framerate", "$images/$audioDuration", "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2","-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", "-shortest", VIDEO_TMP)
+        doReturn("adsf asdf as No such file or directory adfasdf adfas").`when`(commandRunner).run(directory, "ffmpeg", "-y", "-framerate", "$images/$audioDuration", "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2","-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", VIDEO_TMP)
 
         videoBuilder.build(videoId, images)
     }

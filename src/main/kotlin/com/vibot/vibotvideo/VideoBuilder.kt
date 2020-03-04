@@ -63,14 +63,15 @@ class VideoBuilder @Autowired constructor(
     //sox -v 0.3 Arpy.mp3 new_audio.mp3 repeat 10
     private fun buildMusicLoop(directory: File, times: Int, duration: Float) {
         LOGGER.info("Building music loop")
-        commandRunner.run(directory, "sox", "-v", " 0.05", "music.mp3", MUSIC_LOOP_FILE, "repeat", (times - 1).toString(), "trim", "0", "${duration.roundToInt()}")
+        val duration = duration.roundToInt() + 3 //1 sec longer than video
+        commandRunner.run(directory, "sox", "-v", " 0.05", "music.mp3", MUSIC_LOOP_FILE, "repeat", (times - 1).toString(), "trim", "0", "$duration")
         LOGGER.info("Music loop builded")
     }
 
     //ffmpeg -y -thread_queue_size 128 -framerate 3/314 -start_number 1 -i %d-image.jpg -i audio.wav -c:v libx264 -r 1 -pix_fmt yuv420p -c:a aac -strict experimental -shortest out.mp4
     private fun buildVideo(directory: File, frameRate: String) {
         LOGGER.info("Building video")
-        val result = commandRunner.run(directory, "ffmpeg", "-y", "-framerate", frameRate, "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", "-shortest", "-threads", "1", VIDEO_TMP)
+        val result = commandRunner.run(directory, "ffmpeg", "-y", "-framerate", frameRate, "-start_number", "1", "-i", "%d-image.jpg", "-i", AUDIO_FILE, "-c:v", "libx264", "-r", "1", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "-c:a", "aac", "-strict", "experimental", VIDEO_TMP)
         checkErros(result)
         LOGGER.info("Video builded")
     }
