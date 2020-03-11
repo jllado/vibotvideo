@@ -3,8 +3,11 @@ package com.vibot.vibotvideo
 import org.apache.commons.io.FileUtils
 import org.springframework.stereotype.Service
 import java.io.File
+import java.io.InputStream
 import java.net.URL
+import java.net.URLConnection
 import java.security.cert.X509Certificate
+import javax.imageio.ImageIO
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
@@ -19,7 +22,7 @@ class FileDownloader {
         useInsecureSSL()
         File(directory).mkdir()
         val newFile = File("$directory/$file")
-        FileUtils.copyURLToFile(URL(url), newFile)
+        FileUtils.copyURLToFile(URL(url), newFile, 5000, 5000)
         return newFile
     }
 
