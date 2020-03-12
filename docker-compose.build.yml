@@ -1,0 +1,13 @@
+version: '3'
+services:
+  vibot-video-build:
+    container_name: vibot-video-build
+    volumes:
+      - ${APP_PATH:-./}:/app
+      - vibot-video-build_gradle_dist:/root/.gradle
+    build:
+      context: .
+      dockerfile: Dockerfile-build
+volumes:
+  vibot-video-build_gradle_dist:
+    driver: local

@@ -1,0 +1,12 @@
+FROM adoptopenjdk/openjdk12:x86_64-ubuntu-jdk-12.0.2_10-slim
+LABEL maintainer="jllado@gmail.com"
+RUN apt-get update --fix-missing
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:jonathonf/ffmpeg-4
+RUN apt-get update
+RUN apt-get install -y ffmpeg sox libsox-fmt-mp3
+RUN mkdir /app
+VOLUME /app
+VOLUME /root/.gradle
+WORKDIR /app
+ENTRYPOINT ["./gradlew", "build", "--no-daemon", "-DupdateTestTimestamps=true"]
