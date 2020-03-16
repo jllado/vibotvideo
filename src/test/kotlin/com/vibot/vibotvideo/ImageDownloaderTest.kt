@@ -34,7 +34,7 @@ class ImageDownloaderTest {
     fun `given wrong image should skip it`() {
         val directory = "any_directory"
         val image1 = "https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg"
-        val image2 = "https://wtf"
+        val image2 = "https://wtf.url"
         val image3 = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
         doThrow(IllegalStateException("wtf")).`when`(fileDownloader).download(image1, directory, "1-image.jpg")
 
