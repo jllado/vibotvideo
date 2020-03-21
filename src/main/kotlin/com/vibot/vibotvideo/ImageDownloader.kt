@@ -20,7 +20,7 @@ class ImageDownloader @Autowired constructor(
                 fileDownloader.download(image, directory, "${downloaded + 1}-image.jpg")
                 downloaded++
             } catch (e: Exception) {
-                LOGGER.error("Image download failed {} with error", image, e)
+                LOGGER.error("Image download failed {} with error: {}", image, e.toString(), e)
             }
         }
         return downloaded
