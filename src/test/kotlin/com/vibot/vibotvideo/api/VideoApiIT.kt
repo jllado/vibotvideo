@@ -38,7 +38,7 @@ class VideoApiIT {
 
     @Test
     fun `send video audio and images urls should return video url`() {
-        val audioUrl = "https://file-examples.com/wp-content/uploads/2017/11/file_example_WAV_1MG.wav"
+        val audioUrl = "https://rhythm-lab.com/sstorage/53/2019/12/4th%20Coming%20-%20You%20Don't%20Stand%20a%20Chance,%20Pt.%202.wav"
         val image1 = "https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg"
         val image2 = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
         val post = "{\"audio\": \"$audioUrl\",\"images\": [\"$image1\",\"$image2\"]}"
