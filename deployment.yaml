@@ -6,7 +6,7 @@ spec:
   selector:
     app: vibot-video
   ports:
-    - port: 40000
+    - port: 10001
       targetPort: 8080
   type: LoadBalancer
   sessionAffinity: None
