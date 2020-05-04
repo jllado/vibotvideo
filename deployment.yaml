@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: vibot-video
+spec:
+  selector:
+    app: vibot-video
+  ports:
+    - port: 40000
+      targetPort: 8080
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vibot-video
+spec:
+  selector:
+    matchLabels:
+      app: vibot-video
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: vibot-video
+    spec:
+      containers:
+        - name: vibot-video
+          image: jllado-server:5000/vibot/vibot-video:latest
+          imagePullPolicy: Always
+

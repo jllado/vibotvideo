@@ -1,9 +1,8 @@
 version: '3'
 services:
   vibot-video:
-    image: jllado-server:5000/vibot/vibot-video:latest
+    image: jllado-server:5000/vibot/vibot-video:${DEPLOY_VERSION:-latest}
     container_name: vibot-video
     build: .
     ports:
       - "10001:8080"
-    restart: always
