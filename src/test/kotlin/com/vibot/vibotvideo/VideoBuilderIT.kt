@@ -2,7 +2,6 @@ package com.vibot.vibotvideo
 
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.greaterThan
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +34,7 @@ class VideoBuilderIT {
         builder.build(VIDEO_ID, images)
 
         assertThat(video.exists(), `is`(true))
-        assertThat(video.length(), `is`(2136849L))
+        assertThat(video.length(), `is`(2169663L))
     }
 
     private fun createMediaFiles() {

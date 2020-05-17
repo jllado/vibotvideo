@@ -39,8 +39,8 @@ class VideoApiIT {
     @Test
     fun `send video audio and images urls should return video url`() {
         val audioUrl = "https://rhythm-lab.com/sstorage/53/2019/12/4th%20Coming%20-%20You%20Don't%20Stand%20a%20Chance,%20Pt.%202.wav"
-        val image1 = "https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg"
-        val image2 = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
+        val image1 = "https://pluspng.com/img-png/search-hd-png-seo-png-hd-png-image-1270.png"
+        val image2 = "https://moodle.inasp.info/pluginfile.php/200987/mod_folder/content/0/3.18%20Advanced%20search.png"
         val post = "{\"audio\": \"$audioUrl\",\"images\": [\"$image1\",\"$image2\"]}"
         val urlResponseResult = mvc.perform(post("/buildVideo").contentType(MediaType.APPLICATION_JSON_UTF8).content(post))
                 .andExpect(status().isOk)

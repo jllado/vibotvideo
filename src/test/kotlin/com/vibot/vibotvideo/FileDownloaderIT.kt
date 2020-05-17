@@ -14,7 +14,7 @@ class FileDownloaderIT {
 
     private val downloadRootDirectory = "temp_download"
     private val downloadDirectory = "$downloadRootDirectory/dfasdf"
-    private val downloadTarget = "image.jpg"
+    private val downloadTarget = "image.png"
 
     private lateinit var downloadedFile: File
 
@@ -25,7 +25,7 @@ class FileDownloaderIT {
 
     @Test
     fun `should download file`() {
-        val fileUrl = "http://newnation.sg/wp-content/uploads/random-pic-internet-22.jpg"
+        val fileUrl = "https://pluspng.com/img-png/search-hd-png-seo-png-hd-png-image-1270.png"
 
         downloadedFile = fileDownloader.download(fileUrl, downloadDirectory, downloadTarget)
 
@@ -34,7 +34,7 @@ class FileDownloaderIT {
 
     @Test
     fun `should download image with insecure https image`() {
-        val fileUrl = "https://www.rumbonuevo.com.mx/wp-content/uploads/2019/05/LOZOYA-1.jpg"
+        val fileUrl = "https://pluspng.com/img-png/search-hd-png-seo-png-hd-png-image-1270.png"
 
         downloadedFile = fileDownloader.download(fileUrl, downloadDirectory, downloadTarget)
 

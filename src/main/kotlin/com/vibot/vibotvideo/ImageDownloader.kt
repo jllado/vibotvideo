@@ -17,7 +17,7 @@ class ImageDownloader @Autowired constructor(
         var downloaded = 0
         for (image in images) {
             try {
-                fileDownloader.download(image, directory, "${downloaded + 1}-image.jpg")
+                fileDownloader.download(image, directory, "${downloaded + 1}-image.png")
                 downloaded++
             } catch (e: Exception) {
                 LOGGER.error("Image download failed {} with error: {}", image, e.toString(), e)

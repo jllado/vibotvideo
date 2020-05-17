@@ -5,6 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class VideoIdBuilder {
-
     fun build(): String = RandomStringUtils.randomAlphabetic(8)
 }
