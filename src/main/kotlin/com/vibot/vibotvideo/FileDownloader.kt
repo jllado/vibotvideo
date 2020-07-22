@@ -26,7 +26,7 @@ class FileDownloader {
         return newFile
     }
 
-    fun useInsecureSSL() {
+    private fun useInsecureSSL() {
         // Create a trust manager that does not validate certificate chains
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             override fun getAcceptedIssuers(): Array<X509Certificate>? = null
